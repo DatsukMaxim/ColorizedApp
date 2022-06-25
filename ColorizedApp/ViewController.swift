@@ -23,30 +23,32 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         currentColorView.layer.cornerRadius = 10
-        
     }
-
-    // Получать значение каждого слайдера +
-    // Записывать значение слайдера в соответствующую переменную +
-    // Исходя из значений переменных миксовать цвет
-    // Кажется, что для задания корректного значения цвета нужно slider.value * 255
     
     // MARK: - IB Actions
     @IBAction func redColorSliderAction() {
         redColorValueLabel.text = String(format: "%.2f", redColorSlider.value)
+        setupCurrentColorView()
     }
     
     @IBAction func greenColorSliderAction() {
         greenColorValueLabel.text = String(format: "%.2f", greenColorSlider.value)
+        setupCurrentColorView()
     }
     
     @IBAction func blueColorSliderAction() {
         blueColorValueLabel.text = String(format: "%.2f", blueColorSlider.value)
+        setupCurrentColorView()
     }
     
     // MARK: - Private Methods
-    private func setupCurrentColorView(red: Float, green: Float, blue: Float) {
-        currentColorView.backgroundColor = UIColor.red
+    private func setupCurrentColorView() {
+        currentColorView.backgroundColor = UIColor(
+            red: CGFloat(self.redColorSlider.value),
+            green: CGFloat(self.greenColorSlider.value),
+            blue: CGFloat(self.blueColorSlider.value),
+            alpha: 1
+        )
     }
 }
 

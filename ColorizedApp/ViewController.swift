@@ -10,46 +10,62 @@ import UIKit
 class ViewController: UIViewController {
 
     // MARK: - IB Outlets
-    @IBOutlet var currentColorView: UIView!
+    @IBOutlet weak var colorView: UIView!
     
-    @IBOutlet var redColorValueLabel: UILabel!
-    @IBOutlet var greenColorValueLabel: UILabel!
-    @IBOutlet var blueColorValueLabel: UILabel!
+    @IBOutlet weak var redValueLabel: UILabel!
+    @IBOutlet weak var greenValueLabel: UILabel!
+    @IBOutlet weak var blueValueLabel: UILabel!
     
-    @IBOutlet var redColorSlider: UISlider!
-    @IBOutlet var greenColorSlider: UISlider!
-    @IBOutlet var blueColorSlider: UISlider!
+    @IBOutlet weak var redSlider: UISlider!
+    @IBOutlet weak var greenSlider: UISlider!
+    @IBOutlet weak var blueSlider: UISlider!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        currentColorView.layer.cornerRadius = 10
-        setupCurrentColorView()
+        
+        colorView.layer.cornerRadius = 15
+        setColor()
+        setValue(for: redValueLabel, greenValueLabel, blueValueLabel)
     }
     
     // MARK: - IB Actions
-    @IBAction func redColorSliderAction() {
-        redColorValueLabel.text = String(format: "%.2f", redColorSlider.value)
-        setupCurrentColorView()
-    }
-    
-    @IBAction func greenColorSliderAction() {
-        greenColorValueLabel.text = String(format: "%.2f", greenColorSlider.value)
-        setupCurrentColorView()
-    }
-    
-    @IBAction func blueColorSliderAction() {
-        blueColorValueLabel.text = String(format: "%.2f", blueColorSlider.value)
-        setupCurrentColorView()
+    @IBAction func slidersAction(_ sender: UISlider) {
+        setColor()
+        switch sender {
+        case redSlider:
+            redValueLabel.text = string(from: redSlider)
+        case greenSlider:
+            greenValueLabel.text = string(from: greenSlider)
+        default:
+            blueValueLabel.text = string(from: blueSlider)
+        }
     }
     
     // MARK: - Private Methods
-    private func setupCurrentColorView() {
-        currentColorView.backgroundColor = UIColor(
-            red: CGFloat(self.redColorSlider.value),
-            green: CGFloat(self.greenColorSlider.value),
-            blue: CGFloat(self.blueColorSlider.value),
+    private func setColor() {
+        colorView.backgroundColor = UIColor(
+            red: CGFloat(redSlider.value),
+            green: CGFloat(greenSlider.value),
+            blue: CGFloat(blueSlider.value),
             alpha: 1
         )
+    }
+    
+    private func setValue(for labels: UILabel...) {
+        labels.forEach { label in
+            switch label {
+            case redValueLabel:
+                redValueLabel.text = string(from: redSlider)
+            case greenSlider:
+                greenValueLabel.text = string(from: greenSlider)
+            default:
+                blueValueLabel.text = string(from: blueSlider)
+            }
+        }
+    }
+    
+    private func string(from slider: UISlider) -> String {
+        String(format: "%.2f", slider.value)
     }
 }
 

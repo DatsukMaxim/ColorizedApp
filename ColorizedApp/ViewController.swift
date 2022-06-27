@@ -29,7 +29,7 @@ class ViewController: UIViewController {
     }
     
     // MARK: - IB Actions
-    @IBAction func slidersAction(_ sender: UISlider) {
+    @IBAction func sliderAction(_ sender: UISlider) {
         setColor()
         switch sender {
         case redSlider:

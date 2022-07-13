@@ -36,14 +36,15 @@ class SettingsViewController: UIViewController {
         
         colorView.layer.cornerRadius = 15
         setSlidersValueFrom(color: colorViewBackbroundValue)
-        setColor()
         setValuesBySliderPosition(for: redValueLabel, greenValueLabel, blueValueLabel)
+        setColor()
         setupToolbar(for: redTextField, greenTextField, blueTextField)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super .touchesBegan(touches, with: event)
         view.endEditing(true)
+        setColor()
     }
     
     // MARK: - IB Actions
@@ -64,17 +65,11 @@ class SettingsViewController: UIViewController {
     
     @IBAction func textFieldEditing(_ sender: UITextField) {
         guard let newValue = sender.text else { return }
-        guard var numberValue = Float(newValue) else { return }
-        if numberValue < 0 {
-            numberValue = 0
-        } else if numberValue > 1 {
-            numberValue = 1
-        }
-//        setValuesByTextFieldValue()
+        sender.text = castToRange(for: newValue)
         
         switch sender {
         case redTextField:
-            redSlider.value = numberValue
+            redSlider.value = float(from: redTextField)
             redValueLabel.text = string(from: redSlider)
         case greenTextField:
             greenSlider.value = float(from: greenTextField)
@@ -87,7 +82,6 @@ class SettingsViewController: UIViewController {
     
     @IBAction func doneButtonTapped() {
         view.endEditing(true)
-        
         delegate.setNewColor(
             red: CGFloat(redSlider.value),
             green: CGFloat(greenSlider.value),
@@ -132,26 +126,29 @@ class SettingsViewController: UIViewController {
     
     private func setValuesByTextFieldValue(for textFields: UITextField...) {
         textFields.forEach { textField in
-            guard let newValue = textField.text else { return }
-            guard var numberValue = Float(newValue) else { return }
-            if numberValue < 0 {
-                numberValue = 0
-            } else if numberValue > 1 {
-                numberValue = 1
-            }
-            
             switch textField {
             case redTextField:
-                redValueLabel.text = String(format: "%.2f", numberValue)
-                redSlider.value = numberValue
+                redSlider.value = Float(textField.text!)!
+                redValueLabel.text = castToRange(for: textField.text!)
             case greenTextField:
-                greenValueLabel.text = String(format: "%.2f", numberValue)
-                greenSlider.value = numberValue
+                greenSlider.value = Float(textField.text!)!
+                greenValueLabel.text = castToRange(for: textField.text!)
             default:
-                blueValueLabel.text = String(format: "%.2f", numberValue)
-                blueSlider.value = numberValue
+                blueSlider.value = Float(textField.text!)!
+                blueValueLabel.text = castToRange(for: textField.text!)
             }
         }
+    }
+    
+    private func castToRange(for textFieldValue: String) -> String {
+        guard var numberValue = Float(textFieldValue) else { return "0.00" }
+        if numberValue < 0 {
+            numberValue = 0
+        } else if numberValue > 1 {
+            numberValue = 1
+        }
+        
+        return String(format: "%.2f", numberValue)
     }
     
     private func string(from slider: UISlider) -> String {
@@ -160,20 +157,7 @@ class SettingsViewController: UIViewController {
     
     private func float(from textField: UITextField) -> Float {
         guard let newValue = textField.text else { return 0 }
-        guard var numberValue = Float(newValue) else { return 0 }
-        if numberValue < 0 {
-            numberValue = 0
-        } else if numberValue > 1 {
-            numberValue = 1
-        }
-        
-        let formatedValue = String(format: "%.2f", numberValue)
-        let result = Float(formatedValue)!
-        
-        print("formatedValue: \(formatedValue)")
-        print("result: \(result)")
-        
-        return result
+        return Float(newValue)!
     }
     
     private func setupToolbar(for textFields: UITextField...) {
@@ -215,6 +199,8 @@ class SettingsViewController: UIViewController {
         redTextField.resignFirstResponder()
         greenTextField.resignFirstResponder()
         blueTextField.resignFirstResponder()
+        
+        setColor()
     }
 }
 
@@ -229,7 +215,7 @@ extension UIColor {
 extension SettingsViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let newValue = textField.text else { return }
-        guard let numberValue = Int(newValue) else { return }
+        guard let numberValue = Float(newValue) else { return }
         switch textField {
         case redTextField:
             redTextField.text = String(format: "%.2f", numberValue)
@@ -238,5 +224,6 @@ extension SettingsViewController: UITextFieldDelegate {
         default:
             blueTextField.text = String(format: "%.2f", numberValue)
         }
+        // не стал писать еще один метод форматирования, показалось, что у меня их и так много
     }
 }

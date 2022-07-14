@@ -81,13 +81,16 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func doneButtonTapped() {
-        view.endEditing(true)
         delegate.setNewColor(
             red: CGFloat(redSlider.value),
             green: CGFloat(greenSlider.value),
             blue: CGFloat(blueSlider.value),
             alpha: 1
         )
+        
+        redSlider.setValue(redSlider.value, animated: true)
+        greenSlider.setValue(greenSlider.value, animated: true)
+        blueSlider.setValue(blueSlider.value, animated: true)
         
         dismiss(animated: true)
     }
@@ -161,16 +164,10 @@ class SettingsViewController: UIViewController {
     }
     
     private func setupToolbar(for textFields: UITextField...) {
-        let toolBar = UIToolbar(frame: CGRect(
-                x: 0,
-                y: 0,
-                width: view.frame.size.width,
-                height: 50
-            )
-        )
+        let toolBar = UIToolbar()
         let flexibleSpace = UIBarButtonItem(
             barButtonSystemItem: .flexibleSpace,
-            target: self,
+            target: nil,
             action: nil
         )
         let doneButton = UIBarButtonItem(
@@ -196,9 +193,7 @@ class SettingsViewController: UIViewController {
     }
     
     @objc private func didTapDone() {
-        redTextField.resignFirstResponder()
-        greenTextField.resignFirstResponder()
-        blueTextField.resignFirstResponder()
+        view.endEditing(true)
         
         setColor()
     }

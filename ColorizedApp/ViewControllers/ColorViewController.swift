@@ -13,8 +13,7 @@ protocol SettingsViewControllerDelegate {
 
 class ColorViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let navigationVC = segue.destination as? UINavigationController else { return }
-        guard let settingsVC = navigationVC.topViewController as? SettingsViewController else { return }
+        guard let settingsVC = segue.destination as? SettingsViewController else { return }
         settingsVC.colorViewBackbroundValue = view.backgroundColor
         settingsVC.delegate = self
         

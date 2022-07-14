@@ -11,13 +11,13 @@
         <!--Settings View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="SettingsViewController" customModule="ColorizedApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="SettingsViewController" customModule="ColorizedApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="WAe-Wz-z7e">
-                                <rect key="frame" x="16" y="31.5" width="288" height="243"/>
+                                <rect key="frame" x="16" y="20.5" width="288" height="243"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jfc-4w-6mu">
                                         <rect key="frame" x="0.0" y="0.0" width="288" height="93"/>
@@ -182,7 +182,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1671" y="93"/>
+            <point key="canvasLocation" x="896" y="93"/>
         </scene>
         <!--Color View Controller-->
         <scene sceneID="U1E-7X-Zlj">
@@ -197,7 +197,7 @@
                     <navigationItem key="navigationItem" id="ZE0-ak-VyY">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="square.and.pencil" catalog="system" id="LTO-y3-B8m">
                             <connections>
-                                <segue destination="6cr-ZK-1oa" kind="show" id="7Ee-CZ-k13"/>
+                                <segue destination="BYZ-38-t0r" kind="presentation" id="ifw-lM-fK0"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -223,25 +223,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vme-cZ-7mG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-684.375" y="92.957746478873247"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="2PC-rT-Zr4">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="6cr-ZK-1oa" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="drh-Pi-Zht"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fxu-8D-BdK">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Inx-6m-2Px"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="T3x-q8-ON3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="877.5" y="92.957746478873247"/>
         </scene>
     </scenes>
     <resources>

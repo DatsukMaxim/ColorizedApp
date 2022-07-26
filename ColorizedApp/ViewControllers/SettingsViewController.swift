@@ -69,13 +69,13 @@ class SettingsViewController: UIViewController {
         
         switch sender {
         case redTextField:
-            redSlider.value = float(from: redTextField)
+            redSlider.setValue(float(from: redTextField), animated: true)
             redValueLabel.text = string(from: redSlider)
         case greenTextField:
-            greenSlider.value = float(from: greenTextField)
+            greenSlider.setValue(float(from: greenTextField), animated: true)
             greenValueLabel.text = string(from: greenSlider)
         default:
-            blueSlider.value = float(from: blueTextField)
+            blueSlider.setValue(float(from: blueTextField), animated: true)
             blueValueLabel.text = string(from: blueSlider)
         }
     }

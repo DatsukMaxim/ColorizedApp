@@ -5,52 +5,56 @@
 //  Created by Maxim Datsuk on 24.06.2022.
 //
 
+
 import UIKit
 
 class SettingsViewController: UIViewController {
-
+    
     // MARK: - IB Outlets
-    @IBOutlet weak var colorView: UIView!
-    
-    @IBOutlet weak var redLabel: UILabel!
-    @IBOutlet weak var greenLabel: UILabel!
-    @IBOutlet weak var blueLabel: UILabel!
-    
-    @IBOutlet weak var redSlider: UISlider!
-    @IBOutlet weak var greenSlider: UISlider!
-    @IBOutlet weak var blueSlider: UISlider!
-    
+    @IBOutlet var colorView: UIView!
+
+    @IBOutlet var redLabel: UILabel!
+    @IBOutlet var greenLabel: UILabel!
+    @IBOutlet var blueLabel: UILabel!
+
+    @IBOutlet var redSlider: UISlider!
+    @IBOutlet var greenSlider: UISlider!
+    @IBOutlet var blueSlider: UISlider!
+
     @IBOutlet var redTextField: UITextField!
     @IBOutlet var greenTextField: UITextField!
     @IBOutlet var blueTextField: UITextField!
-    
+
     // MARK: - Public Properties
+
     var viewBackbroundColorValue: UIColor!
     var delegate: SettingsViewControllerDelegate!
-    
+
     // MARK: - View Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         colorView.layer.cornerRadius = 15
 
         redSlider.tintColor = .red
         greenSlider.tintColor = .green
         blueSlider.tintColor = .blue
-        
+
         colorView.backgroundColor = viewBackbroundColorValue
 
         setValue(for: redSlider, greenSlider, blueSlider)
         setValue(for: redLabel, greenLabel, blueLabel)
         setValue(for: redTextField, greenTextField, blueTextField)
-}
-    
+    }
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         view.endEditing(true)
     }
-    
+
     // MARK: - IB Actions
+
     @IBAction func sliderAction(_ sender: UISlider) {
         switch sender {
         case redSlider:
@@ -63,10 +67,10 @@ class SettingsViewController: UIViewController {
             setValue(for: blueLabel)
             setValue(for: blueTextField)
         }
-        
+
         setColor()
     }
-    
+
     @IBAction func doneButtonTapped() {
         delegate.setColor(colorView.backgroundColor ?? .white)
         dismiss(animated: true)
@@ -74,6 +78,7 @@ class SettingsViewController: UIViewController {
 }
 
 // MARK: - Private Methods
+
 extension SettingsViewController {
     private func setColor() {
         colorView.backgroundColor = UIColor(
@@ -83,7 +88,7 @@ extension SettingsViewController {
             alpha: 1
         )
     }
-    
+
     private func setValue(for sliders: UISlider...) {
         let ciColor = CIColor(color: viewBackbroundColorValue)
         sliders.forEach { slider in
@@ -94,7 +99,7 @@ extension SettingsViewController {
             }
         }
     }
-    
+
     private func setValue(for labels: UILabel...) {
         labels.forEach { label in
             switch label {
@@ -104,7 +109,7 @@ extension SettingsViewController {
             }
         }
     }
-    
+
     private func setValue(for textFields: UITextField...) {
         textFields.forEach { textField in
             switch textField {
@@ -114,15 +119,15 @@ extension SettingsViewController {
             }
         }
     }
-    
+
     private func string(from slider: UISlider) -> String {
         String(format: "%.2f", slider.value)
     }
-    
+
     @objc private func didTapDone() {
         view.endEditing(true)
     }
-    
+
     private func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default)
@@ -132,14 +137,15 @@ extension SettingsViewController {
 }
 
 // MARK: - UITextFieldsDelegete
+
 extension SettingsViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let currentValue = Float(textField.text ?? "") else {
             showAlert(title: "Wrong format!", message: "Please enter correct value")
             return
         }
-        
-        if currentValue >= 0 && currentValue <= 1 {
+
+        if currentValue >= 0, currentValue <= 1 {
             switch textField {
             case redTextField:
                 redSlider.setValue(currentValue, animated: true)
@@ -151,31 +157,31 @@ extension SettingsViewController: UITextFieldDelegate {
                 blueSlider.setValue(currentValue, animated: true)
                 setValue(for: blueLabel)
             }
-            
+
             setColor()
             return
         }
-        
+
         showAlert(title: "Wrong format!", message: "Please enter correct value")
     }
-    
+
     func textFieldDidBeginEditing(_ textField: UITextField) {
         let keyboardToolbar = UIToolbar()
         keyboardToolbar.sizeToFit()
         textField.inputAccessoryView = keyboardToolbar
-        
+
         let doneButton = UIBarButtonItem(
             barButtonSystemItem: .done,
             target: self,
             action: #selector(didTapDone)
         )
-        
+
         let flexBarButton = UIBarButtonItem(
             barButtonSystemItem: .flexibleSpace,
             target: nil,
             action: nil
         )
-        
+
         keyboardToolbar.items = [flexBarButton, doneButton]
     }
 }

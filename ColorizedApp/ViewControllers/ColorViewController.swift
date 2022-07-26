@@ -12,15 +12,15 @@ protocol SettingsViewControllerDelegate {
 }
 
 class ColorViewController: UIViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
         guard let settingsVC = segue.destination as? SettingsViewController else { return }
         settingsVC.viewBackbroundColorValue = view.backgroundColor
         settingsVC.delegate = self
-        
     }
 }
 
 // MARK: - SettingsViewControllerDelegate
+
 extension ColorViewController: SettingsViewControllerDelegate {
     func setColor(_ color: UIColor) {
         view.backgroundColor = color

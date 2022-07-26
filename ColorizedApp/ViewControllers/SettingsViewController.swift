@@ -5,11 +5,9 @@
 //  Created by Maxim Datsuk on 24.06.2022.
 //
 
-
 import UIKit
 
 class SettingsViewController: UIViewController {
-    
     // MARK: - IB Outlets
     @IBOutlet var colorView: UIView!
 
@@ -26,12 +24,10 @@ class SettingsViewController: UIViewController {
     @IBOutlet var blueTextField: UITextField!
 
     // MARK: - Public Properties
-
     var viewBackbroundColorValue: UIColor!
     var delegate: SettingsViewControllerDelegate!
 
     // MARK: - View Life Cycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -54,7 +50,6 @@ class SettingsViewController: UIViewController {
     }
 
     // MARK: - IB Actions
-
     @IBAction func sliderAction(_ sender: UISlider) {
         switch sender {
         case redSlider:
@@ -78,7 +73,6 @@ class SettingsViewController: UIViewController {
 }
 
 // MARK: - Private Methods
-
 extension SettingsViewController {
     private func setColor() {
         colorView.backgroundColor = UIColor(
@@ -137,7 +131,6 @@ extension SettingsViewController {
 }
 
 // MARK: - UITextFieldsDelegete
-
 extension SettingsViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let currentValue = Float(textField.text ?? "") else {

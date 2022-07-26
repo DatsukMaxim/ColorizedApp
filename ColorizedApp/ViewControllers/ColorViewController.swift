@@ -20,7 +20,6 @@ class ColorViewController: UIViewController {
 }
 
 // MARK: - SettingsViewControllerDelegate
-
 extension ColorViewController: SettingsViewControllerDelegate {
     func setColor(_ color: UIColor) {
         view.backgroundColor = color
